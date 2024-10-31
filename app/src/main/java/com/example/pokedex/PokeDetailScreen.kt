@@ -127,6 +127,8 @@ private fun PokeDetailContent(pokemonDetail: PokeDTO?, isLoading: Boolean) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+            //cabeçalho
+
             //Seção Imagem
             Box(
                 modifier = Modifier
