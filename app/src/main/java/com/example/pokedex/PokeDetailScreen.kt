@@ -115,7 +115,7 @@ private fun PokeDetailContent(pokemonDetail: PokeDTO?, isLoading: Boolean) {
     if (isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator(
-                color = Color(0xFFE3350D), // Vermelho Pokémon
+                color = Color(0xFFE3350D),
                 strokeWidth = 4.dp
             )
         }
