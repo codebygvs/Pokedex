@@ -1,4 +1,4 @@
-package com.example.pokedex
+package com.example.pokedex.list.presentation.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
@@ -24,7 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,59 +39,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.example.pokedex.model.PokeDTO
-import com.example.pokedex.model.PokeResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.pokedex.ApiService
+import com.example.pokedex.R
+import com.example.pokedex.common.model.PokeDTO
+import com.example.pokedex.list.presentation.PokeListViewModel
+
 
 
 @Composable
-fun PokeListScreen(navController: NavHostController) {
-    var pokemonList by remember { mutableStateOf<List<PokeDTO>>(emptyList()) }
-    var isLoading by remember { mutableStateOf(true) }
-    val apiService = RetrofitClient.retrofitInstance.create(ApiService::class.java)
+fun PokeListScreen(
+    navController: NavHostController,
+    viewModel: PokeListViewModel
+) {
 
-    LaunchedEffect(Unit) {
-        val callPokemonList = apiService.getPokemonList(limit = 100, offset = 0)
-        callPokemonList.enqueue(object : Callback<PokeResponse> {
-            override fun onResponse(
-                call: Call<PokeResponse>,
-                response: Response<PokeResponse>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.resultsPoke?.forEach { pokemon ->
-                        val callPokemon: Call<PokeDTO> =
-                            apiService.getPokemon(pokemon.id)
-                        callPokemon.enqueue(object : Callback<PokeDTO> {
-                            override fun onResponse(
-                                call: Call<PokeDTO>,
-                                response: Response<PokeDTO>
-                            ) {
-                                if (response.isSuccessful) {
-                                    val detailedPokemon = response.body()
-                                    if (detailedPokemon != null) {
-                                        pokemonList =
-                                            (pokemonList + detailedPokemon).sortedBy { it.id }
-                                    }
-                                }
-                            }
-
-                            override fun onFailure(call: Call<PokeDTO>, t: Throwable) {
-                                // Handle error
-                            }
-                        })
-                    }
-                }
-                isLoading = false
-            }
-
-            override fun onFailure(call: Call<PokeResponse>, t: Throwable) {
-                // Handle error
-                isLoading = false
-            }
-        })
-    }
+    val pokemonList by viewModel.uiPokemonList.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
     PokeListContent(
         pokemonList = pokemonList,

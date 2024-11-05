@@ -1,7 +1,7 @@
 package com.example.pokedex
 
-import com.example.pokedex.model.PokeDTO
-import com.example.pokedex.model.PokeResponse
+import com.example.pokedex.common.model.PokeDTO
+import com.example.pokedex.common.model.PokeResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

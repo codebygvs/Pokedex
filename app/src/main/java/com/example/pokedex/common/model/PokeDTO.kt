@@ -1,4 +1,4 @@
-package com.example.pokedex.model
+package com.example.pokedex.common.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -10,10 +10,11 @@ data class PokeDTO(
     val types: List<Type>,
     val abilities: List<Ability>,
     val stats: List<Stat>,
+    val baseExperience: Int,
     val moves: List<Move>,
     val forms: List<Form>,
     @SerializedName("held_items")
-    val heldItems: List<HeldItem>
+    val heldItems: List<HeldItem>,
 )
 
 data class Type(

@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.glideCompiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.retrofit)
+    implementation(libs.constraintlayout.compose)
     implementation(libs.accompanistGlide)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation(libs.retrofit.adapter.rxjava2)
